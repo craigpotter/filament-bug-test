@@ -1,6 +1,10 @@
 @props([
     'field' => null,
     'hasInlineLabel' => null,
+    // Because this defaults to false, the null assignment operator never passes on line 29.
+    // This means that if you don't pass this prop, it will always be false.
+    // This is a problem because if you pass a field that implements HasNestedRecursiveValidationRules,
+    // it will never be true, even if the field has nested recursive validation rules.
     'hasNestedRecursiveValidationRules' => false,
     'helperText' => null,
     'hint' => null,
@@ -44,6 +48,7 @@
     );
 
     $hasError = $errors->has($statePath) || ($hasNestedRecursiveValidationRules && $errors->has("{$statePath}.*"));
+    dump($hasNestedRecursiveValidationRules, $hasError);
 @endphp
 
 <div {{ $attributes->class(['fi-fo-field-wrp']) }}>
