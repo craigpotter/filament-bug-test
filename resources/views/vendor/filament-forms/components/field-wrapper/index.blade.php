@@ -5,7 +5,7 @@
     // This means that if you don't pass this prop, it will always be false.
     // This is a problem because if you pass a field that implements HasNestedRecursiveValidationRules,
     // it will never be true, even if the field has nested recursive validation rules.
-    'hasNestedRecursiveValidationRules' => false,
+    'hasNestedRecursiveValidationRules' => null,
     'helperText' => null,
     'hint' => null,
     'hintActions' => null,
@@ -113,7 +113,7 @@
 
                 @if ($hasError)
                     <x-filament-forms::field-wrapper.error-message>
-                        {{ $errors->first($statePath) ?? ($hasNestedRecursiveValidationRules ? $errors->first("{$statePath}.*") : null) }}
+                        {{ $errors->has($statePath) ? $errors->first($statePath) : ($hasNestedRecursiveValidationRules ? $errors->first("{$statePath}.*") : null) }}
                     </x-filament-forms::field-wrapper.error-message>
                 @endif
 
